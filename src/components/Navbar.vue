@@ -45,4 +45,7 @@ export default {
 </script>
 
 <style>
+.router-link-exact-active {
+  font-weight: bold;
+}
 </style>
