@@ -59,9 +59,3 @@ export default {
   name: "Hero",
 };
 </script>
-
-<style>
-/* button .btn-success {
-  background-color: #939a96;
-} */
-</style>
