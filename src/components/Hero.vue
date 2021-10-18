@@ -11,12 +11,12 @@
                 in Your Gadget
               </h2>
               <p>Ayo pilih dan pesan makanan favorite Anda</p>
-              <button
+              <router-link to="/foods"
                 class="btn btn-lg btn-success"
                 style="background-color: #4eb883"
               >
                 <b-icon-arrow-right></b-icon-arrow-right> Pesan
-              </button>
+              </router-link>
             </div>
           </div>
         </div>

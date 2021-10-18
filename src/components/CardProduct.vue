@@ -8,7 +8,9 @@
     <div class="card-body">
       <h5 class="card-title">{{ product.nama }}</h5>
       <p class="card-text">Harga : Rp. {{ product.harga }}</p>
-      <a href="#" class="btn btn-success"><b-icon-cart></b-icon-cart> Pesan</a>
+      <router-link :to="'/foods/'+product.id" class="btn btn-success"
+        ><b-icon-cart></b-icon-cart> Pesan
+      </router-link>
     </div>
   </div>
 </template>
@@ -33,5 +35,9 @@ export default {
 .card-img-top {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+}
+
+.card img {
+  height: 216px;
 }
 </style>
