@@ -20,11 +20,46 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-md-6">
-          <!-- <img src="" alt=""> -->
+          <img
+            :src="'../assets/images/' + product.gambar"
+            alt=""
+            class="img-fluid shadow"
+          />
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <h2>
+            <strong>{{ product.nama }}</strong>
+          </h2>
+          <h4>
+            Harga : <strong>Rp. {{ product.harga }}</strong>
+          </h4>
+          <hr />
+
+          <form action="" class="mt-3">
+            <div class="form-group">
+              <label for="jumlah_pesanan">Jumlah Pesanan</label>
+              <input type="number" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="keterangan">Keterangan</label>
+              <textarea
+                name=""
+                id=""
+                class="form-control"
+                cols="30"
+                rows="5"
+                placeholder="Cth: Nasi setengah"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+              <b-icon-cart></b-icon-cart> Pesan
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -41,17 +76,17 @@ export default {
   },
   data() {
     return {
-      products: [],
+      product: [],
     };
   },
   methods: {
     setProduct(data) {
-      this.products = data;
+      this.product = data;
     },
   },
   mounted() {
     axios
-      .get("http://localhost:3000/products" + this.$route.params.id)
+      .get("http://localhost:3000/products/" + this.$route.params.id)
       // handle success
       .then((response) => this.setProduct(response.data))
       // handle error
@@ -69,5 +104,9 @@ export default {
 .breadcrumb-item.active {
   font-weight: bold;
   color: black;
+}
+
+.img-fluid {
+  border-radius: 15px;
 }
 </style>
