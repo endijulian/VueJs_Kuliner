@@ -37,25 +37,28 @@
           </h4>
           <hr />
 
-          <form action="" class="mt-3">
+          <form action="" class="mt-3" v-on:submit.prevent>
             <div class="form-group">
               <label for="jumlah_pesanan">Jumlah Pesanan</label>
-              <input type="number" class="form-control" />
+              <input
+                type="number"
+                class="form-control"
+                v-model="pesan.jumlah_pemesanan"
+              />
             </div>
 
             <div class="form-group">
               <label for="keterangan">Keterangan</label>
               <textarea
-                name=""
-                id=""
+                v-model="pesan.keterangan"
                 class="form-control"
                 cols="30"
                 rows="5"
-                placeholder="Cth: Nasi setengah"
+                placeholder="Cth: Pedas"
               ></textarea>
             </div>
 
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" @click="pemesanan">
               <b-icon-cart></b-icon-cart> Pesan
             </button>
           </form>
@@ -76,12 +79,38 @@ export default {
   },
   data() {
     return {
-      product: [],
+      product: {},
+      pesan: {},
     };
   },
   methods: {
     setProduct(data) {
       this.product = data;
+    },
+    pemesanan() {
+      if (this.pesan.jumlah_pemesanan) {
+        // console.log(this.pesan);
+        this.pesan.products = this.product;
+        axios
+          .post("http://localhost:3000/keranjangs", this.pesan)
+          .then(() => {
+            //memasukan ke keranjang
+            this.$router.push({ path: "/keranjang" });
+            // console.log("Berhasil");
+            this.$toast.success("Berhasil ditambhakan dikeranjang.", {
+              // optional options Object
+              type: "success",
+              position: "top-right",
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.$toast.error("Jumlah pesanan harus diisi.", {
+          // optional options Object
+          type: "error",
+          position: "top-right",
+        });
+      }
     },
   },
   mounted() {
