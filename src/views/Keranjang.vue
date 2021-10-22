@@ -84,6 +84,30 @@
           </div>
         </div>
       </div>
+
+      <div class="row justify-content-end">
+        <div class="col-md-4">
+          <form action="" class="mt-3" v-on:submit.prevent>
+            <div class="form-group">
+              <label for="nama">Nama</label>
+              <input type="text" class="form-control" v-model="pesan.nama" />
+            </div>
+
+            <div class="form-group">
+              <label for="noMeja">Nomor Meja</label>
+              <input type="text" class="form-control" v-model="pesan.noMeja" />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-success float-right"
+              @click="checkout"
+            >
+              <b-icon-cart></b-icon-cart> Pesan
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -100,6 +124,7 @@ export default {
   data() {
     return {
       keranjangs: [],
+      pesan: {},
     };
   },
   methods: {
@@ -127,6 +152,38 @@ export default {
         })
         // handle error
         .catch((error) => console.log("Gagal : ", error));
+    },
+    checkout() {
+      // console.log("Pesan : ", this.pesan);
+      if (this.pesan.nama && this.pesan.noMeja) {
+        this.pesan.keranjangs = this.keranjangs;
+        axios
+          .post("http://localhost:3000/pesanans", this.pesan)
+          .then(() => {
+            //Hapus data dikeranjang setelah dipesan
+            this.keranjangs.map(function (item) {
+              return axios
+                .delete("http://localhost:3000/keranjangs/" + item.id)
+                .catch((error) => console.log(error));
+            });
+
+            //memasukan ke keranjang
+            this.$router.push({ path: "/pesanan-sukses" });
+            // console.log("Berhasil");
+            this.$toast.success("Sukses Dipesan.", {
+              // optional options Object
+              type: "success",
+              position: "top-right",
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.$toast.error("Nama dan nomor meja harus diisi.", {
+          // optional options Object
+          type: "error",
+          position: "top-right",
+        });
+      }
     },
   },
   mounted() {
